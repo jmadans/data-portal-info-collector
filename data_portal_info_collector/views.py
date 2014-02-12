@@ -3,6 +3,7 @@ from forms import FipsFinderForm, DataPortalForm
 from fips_helpers import find_state_county_place_fips
 from logging import debug
 from wufoo_helpers import submit_form_to_wufoo
+from portal_data_helpers import insert_data_portal_record
 
 from flask import Flask
 
@@ -35,6 +36,7 @@ def create():
   form = DataPortalForm(request.form)
   if form.validate():
     submit_form_to_wufoo(request.form)
+    insert_data_portal_record(request.form)
     return redirect('/thanks')
   return render_template('new.html', title = 'Data Portal Hunt', form = form)
 
